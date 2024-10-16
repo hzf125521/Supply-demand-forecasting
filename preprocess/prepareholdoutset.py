@@ -22,7 +22,7 @@ class PrepareHoldoutSet(object):
         self.get_holdoutset(holdout_id = 1)
         
         assert ['2016-01-13-46','2016-01-13-58','2016-01-13-70','2016-01-13-82','2016-01-13-94','2016-01-13-106','2016-01-13-118','2016-01-13-130','2016-01-13-142'] == self.get_holdoutset(holdout_id = 101)
-        print "unit test passed"
+        print ("unit test passed")
         return
     def get_holdoutset(self, holdout_id = 1):
         res = []

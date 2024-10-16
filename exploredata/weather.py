@@ -1,8 +1,8 @@
 from utility.datafilepath import g_singletonDataFilePath
-from timeslot import singletonTimeslot
+from .timeslot import singletonTimeslot
 import pandas as pd
 import os
-from exploredata import ExploreData
+from .exploredata import ExploreData
 from time import time
 from utility.dumpload import DumpLoad
 from scipy.stats import mode
@@ -26,7 +26,7 @@ class ExploreWeather(ExploreData ):
 #         
         assert  2== self.find_prev_weather_mode('2016-01-21-115', weather_dict = weather_dict)[0]
         assert  2== self.find_prev_weather_mode('2016-01-21-114', weather_dict = weather_dict)[0]
-        print 'passed unit test'
+        print ('passed unit test')
         
         
         return
@@ -46,7 +46,7 @@ class ExploreWeather(ExploreData ):
             
        
         dumpload.dump(resDict)
-        print "dump weather dict:", round(time()-t0, 3), "s"
+        print( "dump weather dict:", round(time()-t0, 3), "s")
         return resDict
     def process_all_df(self, df):
         self.add_timeid_col(df)

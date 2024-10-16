@@ -1,6 +1,6 @@
 import xgboost as xgb
-from sklearn.grid_search import ParameterGrid
-from sklearn.grid_search import ParameterSampler
+from sklearn.model_selection import ParameterGrid
+from sklearn.model_selection import ParameterSampler
 import pandas as pd
 import matplotlib.pyplot as plt
 import logging
@@ -52,7 +52,7 @@ class XGBoostBase(object):
         xgb.plot_importance(model)
         plt.show()
          
-        print "features used:\n {}".format(self.get_used_features())
+        print ("features used:\n {}".format(self.get_used_features()))
          
         return
 

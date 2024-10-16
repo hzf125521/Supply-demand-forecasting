@@ -27,7 +27,7 @@ class Timeslot:
             if i == 0:
                 continue
             timeslotID = '2016-11-03-'+ str(i)
-            print i, self.convertToStr(timeslotID)
+            print (i, self.convertToStr(timeslotID))
         return
     def convertToDateTime(self, timeslotID):
         tid = int(timeslotID[11:])
@@ -75,7 +75,7 @@ class Timeslot:
         assert ['2016-01-31-144'] == self.getPrevSlots('2016-02-01-1', 1)
         assert ['2015-12-31-144'] == self.getPrevSlots('2016-01-01-1', 1)
         
-        print "passed the unit test"
+        print( "passed the unit test")
         self.dispTimerange()
         return
 

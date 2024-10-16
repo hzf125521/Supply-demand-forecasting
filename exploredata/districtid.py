@@ -18,7 +18,7 @@ class DistricId:
     def run(self):
         assert 19 == self.convertToId('a5609739c6b5c2719a3752327c5e33a7'), self.convertToId('a5609739c6b5c2719a3752327c5e33a7')
         assert 66 == self.convertToId('1ecbb52d73c522f184a6fc53128b1ea1'), self.convertToId('1ecbb52d73c522f184a6fc53128b1ea1')
-        print "passed unit test"
+        print( "passed unit test")
         return
 
 

@@ -1,5 +1,5 @@
 import pandas as pd
-from districtid import singletonDistricId
+from .districtid import singletonDistricId
 
 class ExplorePoi:
     """Utility class for converting time slot ID
@@ -36,8 +36,8 @@ class ExplorePoi:
     def __get_district_type_list(self):
         raw_dict = self.__load_raw_poi()
         res = set()
-        for _,line_value in raw_dict.iteritems():
-            for district_type_key, _ in line_value.iteritems():
+        for _,line_value in raw_dict.items():
+            for district_type_key, _ in line_value.items():
                 res.add(district_type_key)
         return res
     def get_district_type_list(self):
@@ -48,7 +48,7 @@ class ExplorePoi:
         raw_dict = self.__load_raw_poi()
         type_list = self.__get_district_type_list()
         type_list_str = ['district_type_' + str(i) for i in type_list]
-        for district, district_dict in raw_dict.iteritems():
+        for district, district_dict in raw_dict.items():
             temp = []
             for item in type_list:
                 try:
@@ -64,7 +64,7 @@ class ExplorePoi:
     def get_district_type_table(self):
         dt = self.get_district_type_dict()
         dt_list = []
-        for item_key, item_value in dt.iteritems():
+        for item_key, item_value in dt.items():
             temp_list = [item_key] + item_value.values.tolist()
             dt_list.append(temp_list)
         df = pd.DataFrame(dt_list, columns=['start_district_id'] + self.get_district_type_list())
@@ -72,7 +72,7 @@ class ExplorePoi:
     def __save_district_type_table(self):
         df = self.get_district_type_table()
         df.to_csv('temp/dt.csv')
-        print df.describe()
+        print (df.describe())
         return
     def run(self):
         self.get_district_type_dict()

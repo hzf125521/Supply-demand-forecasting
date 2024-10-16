@@ -1,6 +1,6 @@
 from os import walk
 from utility.datafilepath import g_singletonDataFilePath
-from timeslot import singletonTimeslot
+from .timeslot import singletonTimeslot
 import pandas as pd
 import os
 
@@ -14,7 +14,7 @@ class ExploreData(object):
             break
         return f
     def combine_all_csv(self, dataDir, filename_prefix, filename_res):
-        print "Combine all csv"
+        print ("Combine all csv")
         resDf = pd.DataFrame()
         filePaths = self.get_all_file_paths(dataDir)
         for filename in filePaths:
@@ -24,7 +24,7 @@ class ExploreData(object):
             resDf = pd.concat([resDf, df], ignore_index = True)
         self.process_all_df(resDf)
         resDf.to_csv(dataDir + filename_res)
-        print "Overall gap statistics: \n{}".format(resDf.describe())
+        print ("Overall gap statistics: \n{}".format(resDf.describe()))
         return
     def process_all_df(self, df):
         pass
@@ -49,7 +49,7 @@ class ExploreData(object):
     def save_all_csv(self, dataDir):
         filePaths = self.get_all_file_paths(dataDir)
         for filename in filePaths:
-            print "save csv for :{}".format(filename)
+            print ("save csv for :{}".format(filename))
             self.save_one_csv(filename)
         return
     def get_intial_colnames(self):
@@ -63,7 +63,7 @@ class ExploreData(object):
         
         df.reset_index(drop = True, inplace = True)
         df.to_csv(os.path.dirname(filename) + '/temp/'+ os.path.basename(filename) + '.csv')
-        print df.describe()
+        print( df.describe())
         return df, filename
         return
     def process_one_df(self, df):

@@ -8,15 +8,15 @@ sys.path.insert(0, os.path.abspath('..'))
 from exploredata.order import ExploreOrder
 from exploredata.traffic import ExploreTraffic
 from exploredata.weather import ExploreWeather
-from prepareholdoutset import PrepareHoldoutSet
+from .prepareholdoutset import PrepareHoldoutSet
 from utility.datafilepath import g_singletonDataFilePath
 from utility.dumpload import DumpLoad
 import numpy as np
 import pandas as pd
-from splittrainvalidation import SplitTrainValidation
-from splittrainvalidation import HoldoutSplitMethod
+from .splittrainvalidation import SplitTrainValidation
+from .splittrainvalidation import HoldoutSplitMethod
 from preprocess.historicaldata import HistoricalData
-from preparegapcsv import prepareGapCsvForPrediction
+from .preparegapcsv import prepareGapCsvForPrediction
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from exploredata.poi import ExplorePoi
@@ -256,8 +256,8 @@ class PrepareData(ExploreOrder, ExploreWeather, ExploreTraffic, PrepareHoldoutSe
         return
     def __add_cross_features(self):
         cross_feature_dict = self.__get_label_encode_dict()
-        for exising_feature_names, new_feature_name in cross_feature_dict.iteritems():
-            if isinstance(exising_feature_names, basestring):
+        for exising_feature_names, new_feature_name in cross_feature_dict.items():
+            if isinstance(exising_feature_names, str):
                 # such items in the dict only need to do label encoding, and not cross feature
                 continue
             self.__add_cross_feature(exising_feature_names, new_feature_name)
@@ -340,7 +340,7 @@ class PrepareData(ExploreOrder, ExploreWeather, ExploreTraffic, PrepareHoldoutSe
         df_testset2 = self.res_data_dict[g_singletonDataFilePath.getTest2Dir()]
         le = LabelEncoder()
         cross_feature_dict = self.__get_label_encode_dict()
-        for _, new_feature_name in cross_feature_dict.iteritems():
+        for _, new_feature_name in cross_feature_dict.items():
             to_be_stacked = [df_train[new_feature_name], df_testset1[new_feature_name], df_testset2[new_feature_name]]
             le.fit(pd.concat(to_be_stacked, axis=0))
             df_train[new_feature_name] = le.transform(df_train[new_feature_name])
@@ -373,8 +373,11 @@ class PrepareData(ExploreOrder, ExploreWeather, ExploreTraffic, PrepareHoldoutSe
                 res.append(prefix + '_' + str(j + 1))
         return res
     def __filter_too_big_onehot_encoding(self, enc, to_be_encoded_old, df_train, df_testset1, df_testset2):
-        print "Filter out too big one hot encoding (>=200)", np.array(to_be_encoded_old)[enc.n_values_ >= 200]
-        to_be_encoded = np.array(to_be_encoded_old)[enc.n_values_ < 200]
+        print("Filter out too big one hot encoding (>=200)",
+              np.array(to_be_encoded_old)[np.array(list(map(len, enc.categories_))) >= 200])
+
+        to_be_encoded = np.array(to_be_encoded_old)[np.array(list(map(len, enc.categories_))) < 200]
+
         to_be_stacked_df = pd.concat([df_train[to_be_encoded], df_testset1[to_be_encoded], df_testset2[to_be_encoded]], axis = 0)
         enc.fit(to_be_stacked_df)
         return enc, to_be_encoded
@@ -385,7 +388,7 @@ class PrepareData(ExploreOrder, ExploreWeather, ExploreTraffic, PrepareHoldoutSe
         enc = OneHotEncoder(sparse=False)
         cross_feature_dict = self.__get_label_encode_dict()
         to_be_encoded = []
-        for _, new_feature_name in cross_feature_dict.iteritems():
+        for _, new_feature_name in cross_feature_dict.items():
             to_be_encoded.append(new_feature_name)
         #fix all data source
         to_be_stacked_df = pd.concat([df_train[to_be_encoded], df_testset1[to_be_encoded], df_testset2[to_be_encoded]], axis = 0)
@@ -400,7 +403,8 @@ class PrepareData(ExploreOrder, ExploreWeather, ExploreTraffic, PrepareHoldoutSe
     def __do_one_hot_encoding(self, df, enc, to_be_encoded):
         arr = enc.transform(df[to_be_encoded])
         
-        new_col_names = self.__get_expanded_col_names(to_be_encoded, enc.n_values_)
+        new_col_names = self.__get_expanded_col_names(to_be_encoded, list(map(len, enc.categories_)))
+
         df_res = pd.DataFrame(arr, columns=new_col_names)
         df = pd.concat([df, df_res], axis = 1)
         return df

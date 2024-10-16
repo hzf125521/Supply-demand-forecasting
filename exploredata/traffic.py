@@ -1,11 +1,11 @@
 from utility.datafilepath import g_singletonDataFilePath
-from timeslot import singletonTimeslot
+from .timeslot import singletonTimeslot
 import pandas as pd
 import os
-from exploredata import ExploreData
+from .exploredata import ExploreData
 from time import time
 from utility.dumpload import DumpLoad
-from  districtid import singletonDistricId
+from .districtid import singletonDistricId
 
 
 class ExploreTraffic(ExploreData ):
@@ -34,7 +34,7 @@ class ExploreTraffic(ExploreData ):
         assert [772,802,775] == self.find_prev_traffic(pd.Series([57, '2016-01-24-58']), traffic_dict=traffic_dict,pre_num = 3).tolist()
         
         
-        print 'passed unit test'
+        print ('passed unit test')
         
         
         return
@@ -53,7 +53,7 @@ class ExploreTraffic(ExploreData ):
             resDict[tuple(row[['start_district_id','time_slotid']].tolist())] = row['traffic']
         
         dumpload.dump(resDict)
-        print "dump traffic dict:", round(time()-t0, 3), "s"
+        print( "dump traffic dict:", round(time()-t0, 3), "s")
         return resDict
     def process_all_df(self, df):
         self.add_timeid_col(df)

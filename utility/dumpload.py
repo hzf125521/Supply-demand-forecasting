@@ -1,4 +1,4 @@
-import cPickle as pickle
+import pickle
 import numpy as np
 import os
 
@@ -13,7 +13,7 @@ class DumpLoad:
         return
     def load(self):
         with open(self.pickle_filepath, 'rb') as handle:
-            dataset = pickle.load(handle)
+            dataset = pickle.load(handle, encoding='latin1')
         return dataset
     def isExisiting(self):
         return os.path.exists(self.pickle_filepath) 

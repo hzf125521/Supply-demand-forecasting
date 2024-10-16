@@ -1,13 +1,13 @@
 import pandas as pd
-from  districtid import singletonDistricId
-from timeslot import singletonTimeslot
+from .districtid import singletonDistricId
+from .timeslot import singletonTimeslot
 from os import walk
 import os.path
 from utility.datafilepath import g_singletonDataFilePath
 from time import time
 from utility.dumpload import DumpLoad
 import numpy as np
-from seaborn.utils import iqr
+# from seaborn.utils import iqr
 
 
 
@@ -20,7 +20,7 @@ class ExploreOrder:
         orderFileDir = data_dir + 'order_data/'
         filePaths = self.getAllFilePaths(orderFileDir)
         for filename in filePaths:
-            print "save gap csv for :{}".format(filename)
+            print( "save gap csv for :{}".format(filename))
             res = self.saveOrderCsv(filename)
             self.saveGapCSV(*res)
         return
@@ -34,7 +34,7 @@ class ExploreOrder:
         df['time_id'] = df['time_slotid'].apply(singletonTimeslot.getTimeId)
         return
     def combine_gap_csv(self, orderFileDir):
-        print "Combin all gaps"
+        print( "Combin all gaps")
         resDf = pd.DataFrame()
         filePaths = self.getAllFilePaths(orderFileDir + 'order_data/temp/')
         for filename in filePaths:
@@ -46,7 +46,7 @@ class ExploreOrder:
         self.addTimeIdColumn(resDf)
         resDf['time_date'] = resDf['time_slotid'].apply(singletonTimeslot.getDate)
         resDf.to_csv("../data_raw/" + orderFileDir.split('/')[-2]+ "_gap.csv")
-        print "Overall gap statistics: \n{}".format(resDf.describe())
+        print( "Overall gap statistics: \n{}".format(resDf.describe()))
         return
     def getAllFilePaths(self, rootpath):
         f = []
@@ -63,7 +63,7 @@ class ExploreOrder:
         df['time_slotid'] = df['Time'].map(singletonTimeslot.convertToSlot)
 #         df['dest_district_id'] = df['dest_district_hash'].map(singletonDistricId.convertToId)
         df.to_csv(os.path.dirname(filename) + '/temp/'+ os.path.basename(filename) + '.csv')
-        print df.describe()
+        print( df.describe())
         return df, filename
     def saveGapCSV(self, df, filename):
         items = []
@@ -75,7 +75,7 @@ class ExploreOrder:
             items.append(list(name) + [timeslot]+[missedReqs] + [allReqs])
         resDf = pd.DataFrame(items, columns=['start_district_id','time_slotid','time_slot','gap', 'all_requests'])
         resDf.to_csv(os.path.dirname(filename) + '/temp/'+ os.path.basename(filename) + '_gap.csv')
-        print resDf.describe()
+        print( resDf.describe())
         return
 
     def load_gapdf(self, data_dir):
@@ -101,11 +101,11 @@ class ExploreOrder:
             resDict[tuple(row[['start_district_id','time_slotid']].tolist())] = row['gap']
         
         dumpload.dump(resDict)
-        print "dump gapdict:", round(time()-t0, 3), "s"
+        print( "dump gapdict:", round(time()-t0, 3), "s")
         return resDict
     def dispInfoAboutGap(self):
         df = self.load_gapdf(g_singletonDataFilePath.getGapCsv_Train())
-        print "Number of Gaps with zero value {}, {}".format((df['gap'] == 0).sum(), (df['gap'] == 0).sum()/float(df.shape[0]))
+        print( "Number of Gaps with zero value {}, {}".format((df['gap'] == 0).sum(), (df['gap'] == 0).sum()/float(df.shape[0])))
         return
     def unitTest(self):
         # test cases for find_prev_gap
@@ -128,7 +128,7 @@ class ExploreOrder:
         gap_meanmedian_dict = self.get_gap_meanmedian_dict()
         self.find_gap_meanmedian(pd.Series([5,55]),gap_meanmedian_dict = gap_meanmedian_dict)
 
-        print "unit test passed"
+        print( "unit test passed")
         return
     def find_prev_gap(self, row, pre_num = 3, gap_dict = None):
         start_district_id = row.iloc[0]

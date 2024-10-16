@@ -1,4 +1,4 @@
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import KFold
 import numpy as np
 from datetime import datetime
 from datetime import timedelta
@@ -101,13 +101,13 @@ class SplitTrainValidation(object):
     def __unit_test(self):
         assert ['2016-01-13','2016-01-15','2016-01-17','2016-01-19','2016-01-21'] == self.__get_date('2016-01-13', 5)
         assert ['2016-01-12','2016-01-14','2016-01-16','2016-01-18','2016-01-20'] == self.__get_date('2016-01-12', 5)
-        print self.__getplusslots(2)
-        print self.__getplusslots(4)
-        print self.__getplusslots(6)
+        print( self.__getplusslots(2))
+        print( self.__getplusslots(4))
+        print( self.__getplusslots(6))
 #         self.get_holdoutset(holdout_id = 1)
 #         
 #         assert ['2016-01-13-46','2016-01-13-58','2016-01-13-70','2016-01-13-82','2016-01-13-94','2016-01-13-106','2016-01-13-118','2016-01-13-130','2016-01-13-142'] == self.get_holdoutset(holdout_id = 101)
-        print "unit test passed"
+        print ("unit test passed")
         return
     def __get_df_indexes(self, df, dateslots):
         return df[df['time_slotid'].isin(dateslots)].index

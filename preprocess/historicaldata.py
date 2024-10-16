@@ -12,7 +12,7 @@ class HistoricalData(object):
         return
     def run(self):
         res = self.get_history_data_dict()
-        print len(res)
+        print( len(res))
         return
     def get_history_data_dict(self):
         """
@@ -39,7 +39,7 @@ class HistoricalData(object):
         res_dict = self.__generate_dict(df)            
        
         dumpload.dump(res_dict)
-        print "dump weather dict:", round(time()-t0, 3), "s"
+        print( "dump weather dict:", round(time()-t0, 3), "s")
         return  res_dict
     def __fileter_earlier_date(self, df):
         return

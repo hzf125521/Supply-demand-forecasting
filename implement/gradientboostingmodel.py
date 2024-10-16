@@ -39,7 +39,7 @@ class GrientBoostingModel(BaseModel):
         
         pd.DataFrame({'scores_train': scores_train, 'scores_test': scores_test,'scores_train_mse': scores_train_mse, 'scores_test_mse': scores_test_mse}).to_csv('temp/trend.csv')
         df = pd.DataFrame({'scores_train': scores_train, 'scores_test': scores_test})
-        print "Test set MAPE minimum: {}".format(np.array(scores_test).min())
+        print ("Test set MAPE minimum: {}".format(np.array(scores_test).min()))
 #         df.plot()
 #         plt.show()
         return

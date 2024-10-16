@@ -50,4 +50,4 @@ def mean_absolute_percentage_error_scoring(estimator, X, y):
 if __name__ == "__main__":   
     y_true = [3, -0.5, 2, 0,7]
     y_pred = [2.5, -0.3, 2, 8,0]
-    print mean_absolute_percentage_error(y_true, y_pred)
+    print (mean_absolute_percentage_error(y_true, y_pred))

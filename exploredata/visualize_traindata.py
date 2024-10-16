@@ -35,7 +35,7 @@ class VisualizeTrainData(visualizeData):
 #             dt_sum = dt_sum + item_series
         df = self.get_district_type_table()
         dt_sum = df[self.get_district_type_list()].sum(axis = 0)
-        print dt_sum.describe()
+        print( dt_sum.describe())
         dt_sum.plot(kind='bar')
         plt.xlabel('District Attribute')
         plt.title('Barplot of District Attribute')
@@ -43,7 +43,7 @@ class VisualizeTrainData(visualizeData):
     def weather_distribution(self):
         data_dir = g_singletonDataFilePath.getTrainDir()
         self.gapdf = self.load_weatherdf(data_dir)
-        print self.gapdf['weather'].describe()
+        print (self.gapdf['weather'].describe())
 #         sns.distplot(self.gapdf['gap'],kde=False, bins=100);
         
         sns.countplot(x="weather", data=self.gapdf, palette="Greens_d");
@@ -56,7 +56,7 @@ class VisualizeTrainData(visualizeData):
     def gapdistricution(self):
         data_dir = g_singletonDataFilePath.getTrainDir()
         self.gapdf = self.load_gapdf(data_dir)
-        print self.gapdf['gap'].describe()
+        print (self.gapdf['gap'].describe())
 #         sns.distplot(self.gapdf['gap'],kde=False, bins=100);
         self.gapdf['gap'].plot(kind='hist', bins=200)
         plt.xlabel('Gaps')
@@ -66,7 +66,7 @@ class VisualizeTrainData(visualizeData):
     def traffic_districution(self):
         data_dir = g_singletonDataFilePath.getTrainDir()
         df = self.load_trafficdf(data_dir)
-        print df['traffic'].describe()
+        print( df['traffic'].describe())
 #         sns.distplot(self.gapdf['gap'],kde=False, bins=100);
         df['traffic'].plot(kind='hist', bins=100)
         plt.xlabel('Traffic')
